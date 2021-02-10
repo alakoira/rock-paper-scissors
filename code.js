@@ -25,10 +25,12 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
     const yourSelection = playerSelection.toLowerCase();
-    var result = "";
+    let result = "";
+    let winner = "";
 
     if (yourSelection == computerSelection) {
-        return `Tie! ${yourSelection} ties ${computerSelection}.`;
+        result = `Tie! ${yourSelection} ties ${computerSelection}.`;
+        winner = "tie";
     }
     else {
      
@@ -38,9 +40,11 @@ function playRound(playerSelection, computerSelection) {
                 switch(computerSelection) {
                     case 'paper':
                         result = "You lose! Paper beats Rock.";
+                        winner = "com";
                         break;
                     case 'scissors':
                         result = "You win! Rock beats Scissors."
+                        winner = "you";
                         break;          
                 }
                 break;
@@ -48,9 +52,11 @@ function playRound(playerSelection, computerSelection) {
                 switch(computerSelection) {
                     case 'scissors':
                         result = "You lose! Scissors beats Paper.";
+                        winner = "com";
                         break;
                     case 'rock':
                         result = "You win! Paper beats Rock."
+                        winner = "you";
                         break;          
                 }
                     break;
@@ -58,17 +64,63 @@ function playRound(playerSelection, computerSelection) {
                 switch(computerSelection) {
                     case 'rock':
                         result = "You lose! Rock beats Scissors.";
+                        winner = "com";
                         break;
                     case 'paper':
                         result = "You win! Scissors beats Paper."
+                        winner = "you";
                         break;          
                 }
                 break;
         }
-    return result;
     }
+    console.log(result);
+    return winner;
 }
-const playerSelection = "rock";
-const computerSelection = computerPlay();
 
-console.log(playRound(playerSelection,computerSelection));
+function game() {
+    let yourWins = 0;
+    let computerWins = 0;
+    let ties = 0;
+    let inputs = ["rock","paper","scissors"];
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = "";
+        
+        while (true) {
+
+        playerSelection = prompt().toLowerCase();
+        
+        if (!inputs.includes(playerSelection)) {
+            alert("invalid selection, try again. (type: 'rock' , 'paper' or 'scissors')")
+            continue;
+        }
+        break;
+        
+        }
+        let computerSelection = computerPlay();
+        
+            switch (playRound(playerSelection,computerSelection)) {
+                case "you":
+                    yourWins++;
+                    break;
+                case "com":
+                    computerWins++;
+                    break;
+                default:
+                    ties++;
+            }
+        
+    }
+    if (yourWins > computerWins) {
+        console.log(`Human is victorius! With the result of Human: ${yourWins} Computer: ${computerWins} Ties: ${ties}`)
+    }
+    if (yourWins < computerWins) {
+        console.log(`Computer is victorius! With the result of Computer: ${computerWins}  Human: ${yourWins} Ties: ${ties}`)
+    }
+    if (yourWins == computerWins) {
+        console.log(`After 5 rounds the game tied with the result of Computer: ${computerWins}  Human: ${yourWins} Ties: ${ties}, Nobody wins!`)
+    }
+    
+}
+
+game();
